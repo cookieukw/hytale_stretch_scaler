@@ -2,6 +2,8 @@
 
 A standalone Blockbench plugin that scales Hytale models visually in 3D space by any factor **without touching your UV mapping or requiring you to resize your texture files**.
 
+![Original Model](original_model.png)
+
 ---
 
 ## 🛑 The Core Problem: Hytale's UV Constraint
@@ -27,6 +29,8 @@ As you can see, each face only stores the starting `offset` (X/Y coordinates), `
 3. If your texture remains `256x256`, the UV box is now twice as large, rendering adjacent pixels and ruining your texture mapping.
 4. Even if you scale the texture file to `512x512`, the Blockbench scale tool double-scales the UV offsets under the hood, throwing the texture mapping out of place.
 
+![Standard Blockbench Scale Bug](blockbench_scale_bug.png)
+
 ---
 
 ## 💡 The Solution: Scaling via Stretch
@@ -37,6 +41,10 @@ In Hytale, the visual size of a cube in the 3D viewport is determined by:
 $$\text{Visual Size} = \text{Logical Size} \times \text{Stretch}$$
 
 By scaling the **Stretch** parameter instead of the logical size, we can double (or multiply by any factor) the visual size of the model, while keeping the logical size of the cubes **exactly the same**. Since the logical size doesn't change, the UV sizes and offsets remain **100% untouched** on the original `256x256` texture!
+
+However, manually changing the stretch of all elements causes their positions to drift and overlap because each cube stretches around its own individual center:
+
+![Manual Stretch Drift Bug](manual_stretch_bug.png)
 
 ### The Math Behind the Plugin:
 
@@ -73,3 +81,5 @@ When you input a scale factor $F$ (e.g., `2` to double the size, or `8` to go fr
 4. Go to **Tools** > **Scale via Stretch**.
 5. Input your desired **Scale Factor** (e.g., `2` to double the visual size).
 6. Click **Confirm**. Your model will grow visually in the 3D space, but all UV coordinates will remain perfectly aligned!
+
+![Plugin Scale Success](scaler_plugin_success.png)
