@@ -5,7 +5,7 @@ Plugin.register('hytale_stretch_scaler', {
     author: 'cookieukw',
     description: 'Scales Hytale models visually using stretch to preserve UV mappings and texture coordinates.',
     icon: 'zoom_in',
-    version: '1.0.0',
+    version: '1.0.1',
     variant: 'both',
     min_version: '5.0.0',
     tags: ['Hytale'],
@@ -60,11 +60,11 @@ Plugin.register('hytale_stretch_scaler', {
                                 original_origin[2] * F
                             ]);
                             
-                            // Calculate the new center, compensating for the scaled origin offset
+                            // Scale the cube center directly by F (every point in the model scales from world origin)
                             let new_center = [
-                                (original_origin[0] * F) + (original_center[0] - original_origin[0]),
-                                (original_origin[1] * F) + (original_center[1] - original_origin[1]),
-                                (original_origin[2] * F) + (original_center[2] - original_origin[2])
+                                original_center[0] * F,
+                                original_center[1] * F,
+                                original_center[2] * F
                             ];
                             
                             // Set new coordinates maintaining the same logical size (preserving UVs)
