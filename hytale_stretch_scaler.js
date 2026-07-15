@@ -5,7 +5,7 @@ Plugin.register('hytale_stretch_scaler', {
     author: 'cookieukw',
     description: 'Scales Hytale models visually using stretch to preserve UV mappings and texture coordinates.',
     icon: 'zoom_in',
-    version: '1.0.1',
+    version: '1.0.2',
     variant: 'both',
     min_version: '5.0.0',
     tags: ['Hytale'],
@@ -19,11 +19,11 @@ Plugin.register('hytale_stretch_scaler', {
                     id: 'hytale_stretch_scaler_dialog',
                     title: 'Scale via Stretch',
                     form: {
-                        scale: { label: 'Scale Factor', type: 'number', value: 2, min: 0.01, step: 0.1 }
+                        scale: { label: 'Scale Factor', type: 'number', value: 2, step: 0.1 }
                     },
                     onConfirm(formData) {
                         let F = formData.scale;
-                        if (!F || F <= 0) return;
+                        if (F === 0 || isNaN(F)) return;
                         
                         Undo.initEdit({elements: Cube.all, groups: Group.all});
                         
